@@ -9,5 +9,10 @@
 #include <sys/wait.h>
 
 ssize_t my_getline(char **linee, size_t *n, FILE *stream);
+//set env//
+void setEnv(char *name, char *value, data_shell *tash)
+char *_info(char *name, char *value)
+int set_env(data_shell *tash)
+int unsetenv(data_shell *tash)
 
 #endif
