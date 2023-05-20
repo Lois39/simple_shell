@@ -1,5 +1,4 @@
-#include "main.h"
-#include "stdin.h"
+#include "shell.h"
 /**
  * setEnv - intialise new an environment
  * @name:  name of the environment to be set
@@ -19,7 +18,7 @@ void setEnv(char *name, char *value, data_shell *tash)
 	if (_strcmp(name_env, name) == 0)
 	{
 	free(tash->_environ[c]);
-        tash->environ[c] = _info(name_env, value);
+	tash->environ[c] = _info(name_env, value);
 	free(var_env);
 	return;
 	}
@@ -34,7 +33,7 @@ void setEnv(char *name, char *value, data_shell *tash)
  * _info - info to create a new environment
  * @name: name of the env
  * @value: value of the env
- * Return : 0 or new env
+ * Return : env
  */
 
 char *_info(char *name, char *value)
@@ -63,7 +62,7 @@ char *_info(char *name, char *value)
 int set_env(data_shell *tash)
 {
 	if (tash->args[1] == NULL || tash->args[2] == NULL)
-	{	
+	{
 	get_error(tash, -1);
 	return (1);
 	}
