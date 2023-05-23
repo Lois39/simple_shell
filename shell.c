@@ -59,13 +59,22 @@ ssize_t my_getline(char **linee, size_t *n, FILE *stream)
 
 int main()
 {
+	char **args = NULL;
 	char *line = NULL;
 	size_t bufsize = 0;
+	char *token;
+	int i = 0;
+	char *path;
+	char *command;
+	int command_exists;
+	pid_t child_pid;
+
+	ssize_t chars_read;
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "Shell ~# ", 9);
-		ssize_t chars_read = my_getline(&line, &bufsize, stdin);
+		chars_read = my_getline(&line, &bufsize, stdin);
 
 		if (chars_read == -1)
 		{
@@ -78,9 +87,9 @@ int main()
 				break;
 			}
 
-			char *args[bufsize];
-			char *token = strtok(line, " \t\n");
-			int i = 0;
+			token = strtok(line, " \t\n");
+
+			args = malloc((bufsize + 1) * sizeof(char *));
 
 			while (token != NULL)
 			{
@@ -90,10 +99,10 @@ int main()
 
 			args[i] = NULL;
 
-			char *path = getenv("PATH");
-			char *command = args[0];
+			path = getenv("PATH");
+			command = args[0];
 			
-			int command_exists = 0;
+			command_exists = 0;
                           if (path != NULL)
 			  {
 				  char *path_token = strtok(path, ":");
@@ -102,7 +111,7 @@ int main()
 					  char *executable_path = malloc(strlen(path_token) + strlen(command) +2);
 					  if (executable_path != NULL)
 					  {
-						  sprintf(executable_path, "%s/%s", path_command, command);
+						  sprintf(executable_path, "%s/%s", path_token, command);
 						  if (access(executable_path, X_OK) == 0)
 						  {
 							  command_exists = 1;
@@ -124,7 +133,7 @@ int main()
 				  continue;
 			  }
 
-			  pid_t child_pid = fork();
+			  child_pid = fork();
 			  if (child_pid == -1)
 			  {
 				  write(STDOUT_FILENO, "Failed to fork a child process.\n", 32);
@@ -148,5 +157,6 @@ int main()
 	}
 
 	free(line);
+	free(args);
 	return 0;
 }
