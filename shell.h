@@ -94,7 +94,6 @@ typedef struct builtin_s
 
 /* getline */
 ssize_t my_getline(char **linee, size_t *n, FILE *stream);
-<<<<<<< HEAD
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 
 /* setEnv.c */
@@ -159,12 +158,26 @@ int _isdigit(const char *s)
 int get_len(int n)
 int _atoi(char *s)
 char *aux_itoa(int n)
-=======
-/* set env */
-void setEnv(char *name, char *value, data_shell *tash)
-char *_info(char *name, char *value)
-int set_env(data_shell *tash)
-int unsetenv(data_shell *tash)
->>>>>>> 1d52b90bb5adbd5046d32319d27efb640502a395
+
+/* check_syntax_error.c */
+int repeated_char(char *input, int i);
+int error_sep_op(char *input, int i, char last);
+int first_char(char *input, int *i);
+void print_syntax_error(data_shell *datash, char *input, int i, int bool);
+int check_syntax_error(data_shell *datash, char *input);
+
+/* cmd_exec.c */
+int is_cdir(char *path, int *i);
+char *_which(char *cmd, char **_environ);
+int is_executable(data_shell *datash);
+int check_error_cmd(char *dir, data_shell *datash);
+int cmd_exec(data_shell *datash);
+
+/* aux_error2.c */
+char *error_get_alias(char **args);
+char *error_env(data_shell *tash);
+char *error_syntax(char **args);
+char *error_permission(char **args);
+char *error_path_126(data_shell *tash);
 
 #endif
