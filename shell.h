@@ -94,6 +94,7 @@ typedef struct builtin_s
 
 /* getline */
 ssize_t my_getline(char **linee, size_t *n, FILE *stream);
+<<<<<<< HEAD
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 
 /* setEnv.c */
@@ -158,5 +159,12 @@ int _isdigit(const char *s)
 int get_len(int n)
 int _atoi(char *s)
 char *aux_itoa(int n)
+=======
+/* set env */
+void setEnv(char *name, char *value, data_shell *tash)
+char *_info(char *name, char *value)
+int set_env(data_shell *tash)
+int unsetenv(data_shell *tash)
+>>>>>>> 1d52b90bb5adbd5046d32319d27efb640502a395
 
 #endif
