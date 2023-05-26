@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _strdup - duplicates a str in the heap memory.
+ * _strdup - it will duplicate a str in the heap memory.
  * @s: Type char pointer str
  * Return: duplicated str
  */
@@ -63,7 +63,6 @@ int cmp_chars(char str[], const char *delim)
  * _strtok - splits a string by some delimiter.
  * @str: input string.
  * @delim: delimiter.
- *
  * Return: string splited.
  */
 char *_strtok(char str[], const char *delim)
@@ -76,14 +75,14 @@ char *_strtok(char str[], const char *delim)
 	{
 	if (cmp_chars(str, delim))
 	return (NULL);
-	splitted = str; /*Store first address*/
+	splitted = str;
 	i = _strlen(str);
-	str_end = &str[i]; /*Store last address*/
+	str_end = &str[i];
 	}
 	str_start = splitted;
-	if (str_start == str_end)
-	/*Reaching the end*/
+	if (str_start == str_end) /*Reaching the end*/
 	return (NULL);
+
 	for (bool = 0; *splitted; splitted++)
 	{
 	/*Breaking loop finding the next token*/
@@ -101,11 +100,27 @@ char *_strtok(char str[], const char *delim)
 	break;
 	}
 	}
-	if (bool == 0 && *splitted)
+	if (bool == 0 && *splitted) /*Str != Delim*/
 	bool = 1;
 	}
-	if (bool == 0)
-	/*Str == Delim*/
+	if (bool == 0) /*Str == Delim*/
 	return (NULL);
 	return (str_start);
+}
+
+/**
+ * _isdigit - defines if string passed
+ * @s: input string
+ * Return: 1 if string is a number. 0 in other case.
+ */
+int _isdigit(const char *s)
+{
+	unsigned int i;
+
+	for (i = 0; s[i]; i++)
+	{
+	if (s[i] < 48 || s[i] > 57)
+	return (0);
+	}
+	return (1);
 }

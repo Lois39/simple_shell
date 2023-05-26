@@ -1,65 +1,67 @@
 #include "shell.h"
 
 /**
- * free_data - frees data
- * @tash: the data
+ * free_data - it will free data 
+ * @datash: data
  * Return: no return
  */
-
-void free_data(data_shell *tash)
+void free_data(data_shell *datash)
 {
 	unsigned int i;
 
-	for (i = 0; tash->_environ[i]; i++)
+	for (i = 0; datash->_environ[i]; i++)
 	{
-	free(tash->_environ[i]);
+	free(datash->_environ[i]);
 	}
-	free(tash->_environ);
-	free(tash->pid);
+
+	free(datash->_environ);
+	free(datash->pid);
 }
 
 /**
- * set_data - to initialize data structure
- * @tash: the data
- * @ar: argument struct
- * Return: none
+ * set_data - it will Initialize data structure
+ * @datash: data
+ * @av: argument vector
+ * Return: no return
  */
-void set_data(data_shell *tash, char **ar)
+void set_data(data_shell *datash, char **av)
 {
 	unsigned int i;
 
-	tash->ar = ar;
-	tash->input = NULL;
-	tash->args = NULL;
-	tash->status = 0;
-	tash->counter = 1;
+	datash->av = av;
+	datash->input = NULL;
+	datash->args = NULL;
+	datash->status = 0;
+	datash->counter = 1;
 
 	for (i = 0; environ[i]; i++)
 	;
-	tash->_environ = malloc(sizeof(char *) * (i + 1));
+	datash->_environ = malloc(sizeof(char *) * (i + 1));
 	for (i = 0; environ[i]; i++)
 	{
-	tash->_environ[i] = _strdup(environ[i]);
+	datash->_environ[i] = _strdup(environ[i]);
 	}
-	tash->_environ[i] = NULL;
-	tash->pid = aux_itoa(getpid());
+
+	datash->_environ[i] = NULL;
+	datash->pid = aux_itoa(getpid());
 }
+
 /**
  * main - Entry point
  * @ac: argument count
- * @ar: argument vector
+ * @av: argument vector
  * Return: 0 on success.
  */
-int main(int ac, char **ar)
+int main(int ac, char **av)
 {
-	data_shell tash;
+	data_shell datash;
 	(void) ac;
 
 	signal(SIGINT, get_sigint);
-	set_data(&tash, ar);
-	shell_loop(&tash);
-	free_data(&tash);
-	if (tash.status < 0)
+	set_data(&datash, av);
+	shell_loop(&datash);
+	free_data(&datash);
+	if (datash.status < 0)
 	return (255);
-	return (tash.status);
+	return (datash.status);
 }

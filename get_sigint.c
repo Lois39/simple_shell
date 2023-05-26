@@ -1,11 +1,9 @@
 #include "shell.h"
 
 /**
- * get_sigint - handle the copy call in the
- * command prompt
- * @sig: the handler
+ * get_sigint - Handler of the copy prompt
+ * @sig: Signal handler
  */
-
 void get_sigint(int sig)
 {
 	(void)sig;

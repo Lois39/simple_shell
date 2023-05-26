@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * get_len - to get the lenght of an integer.
+ * get_len - To get the lenght of a number.
  * @n: type int number.
  * Return: Lenght of a number.
  */
@@ -24,7 +24,6 @@ int get_len(int n)
 	lenght++;
 	n1 = n1 / 10;
 	}
-
 	return (lenght);
 }
 /**
@@ -41,7 +40,9 @@ char *aux_itoa(int n)
 	buffer = malloc(sizeof(char) * (lenght + 1));
 	if (buffer == 0)
 	return (NULL);
+
 	*(buffer + lenght) = '\0';
+
 	if (n < 0)
 	{
 	n1 = n * -1;
@@ -76,8 +77,10 @@ int _atoi(char *s)
 	{
 	if (size > 0 && (*(s + count) < '0' || *(s + count) > '9'))
 	break;
+
 	if (*(s + count) == '-')
 	pn *= -1;
+
 	if ((*(s + count) >= '0') && (*(s + count) <= '9'))
 	{
 	if (size > 0)
@@ -94,4 +97,3 @@ int _atoi(char *s)
 	}
 	return (oi * pn);
 }
-

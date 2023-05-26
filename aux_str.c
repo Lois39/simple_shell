@@ -2,8 +2,8 @@
 
 /**
  * _strcat - concatenate two strings
- * @dest: the dest of the copied str
- * @src: the source of str
+ * @dest: char pointer the dest of the copied str
+ * @src: const char pointer the source of str
  * Return: the dest
  */
 char *_strcat(char *dest, const char *src)
@@ -13,18 +13,20 @@ char *_strcat(char *dest, const char *src)
 
 	for (i = 0; dest[i] != '\0'; i++)
 	;
+
 	for (j = 0; src[j] != '\0'; j++)
 	{
 	dest[i] = src[j];
 	i++;
 	}
+
 	dest[i] = '\0';
 	return (dest);
 }
 /**
- * _strcpy - Copies the string pointed to by src.
- * @dest: the dest of the copied str
- * @src:  the source of str
+ * *_strcpy - Copies the string pointed to by src.
+ * @dest: Type char pointer the dest of the copied str
+ * @src: Type char pointer the source of str
  * Return: the dest.
  */
 char *_strcpy(char *dest, char *src)
@@ -58,6 +60,7 @@ int _strcmp(char *s1, char *s2)
 	return (-1);
 	return (0);
 }
+
 /**
  * _strchr - locates a character in a string,
  * @s: string.
@@ -94,7 +97,7 @@ int _strspn(char *s, char *accept)
 	{
 	bool = 0;
 	break;
-	}
+			}
 	}
 	if (bool == 1)
 	break;

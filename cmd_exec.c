@@ -15,8 +15,10 @@ int is_cdir(char *path, int *i)
 	{
 	*i += 1;
 	}
+
 	if (path[*i])
 	*i += 1;
+
 	return (0);
 }
 
@@ -70,17 +72,17 @@ char *_which(char *cmd, char **_environ)
 }
 
 /**
- * is_executable - determines if is an executable
- * @tash: data structure
+ * is_executable - it will determine if its exec.
+ * @datash: data structure
  * Return: 0 if is not an executable, other number if it does
  */
-int is_executable(data_shell *tash)
+int is_executable(data_shell *datash)
 {
 	struct stat st;
 	int i;
 	char *input;
 
-	input = tash->args[0];
+	input = datash->args[0];
 	for (i = 0; input[i]; i++)
 	{
 	if (input[i] == '.')
@@ -109,30 +111,29 @@ int is_executable(data_shell *tash)
 	{
 	return (i);
 	}
-	get_error(tash, 127);
+	get_error(datash, 127);
 	return (-1);
 }
 
 /**
- * check_error_cmd - verifies if user has permissions to access
- *
+ * check_error_cmd - verifies
  * @dir: destination directory
- * @tash: data structure
+ * @datash: data structure
  * Return: 1 if there is an error, 0 if not
  */
-int check_error_cmd(char *dir, data_shell *tash)
+int check_error_cmd(char *dir, data_shell *datash)
 {
 	if (dir == NULL)
 	{
-	get_error(tash, 127);
+	get_error(datash, 127);
 	return (1);
 	}
 
-	if (_strcmp(tash->args[0], dir) != 0)
+	if (_strcmp(datash->args[0], dir) != 0)
 	{
 	if (access(dir, X_OK) == -1)
 	{
-	get_error(tash, 126);
+	get_error(datash, 126);
 	free(dir);
 	return (1);
 	}
@@ -140,11 +141,11 @@ int check_error_cmd(char *dir, data_shell *tash)
 	}
 	else
 	{
-	if (access(tash->args[0], X_OK) == -1)
+	if (access(datash->args[0], X_OK) == -1)
 	{
-	get_error(tash, 126);
+	get_error(datash, 126);
 	return (1);
-	}
+		}
 	}
 
 	return (0);
@@ -152,10 +153,10 @@ int check_error_cmd(char *dir, data_shell *tash)
 
 /**
  * cmd_exec - executes command lines
- * @tash: data relevant (args and input)
+ * @datash: data
  * Return: 1 on success.
  */
-int cmd_exec(data_shell *tash)
+int cmd_exec(data_shell *datash)
 {
 	pid_t pd;
 	pid_t wpd;
@@ -164,13 +165,13 @@ int cmd_exec(data_shell *tash)
 	char *dir;
 	(void) wpd;
 
-	exec = is_executable(tash);
+	exec = is_executable(datash);
 	if (exec == -1)
 	return (1);
 	if (exec == 0)
 	{
-	dir = _which(tash->args[0], tash->_environ);
-	if (check_error_cmd(dir, tash) == 1)
+	dir = _which(datash->args[0], datash->_environ);
+	if (check_error_cmd(dir, datash) == 1)
 	return (1);
 	}
 
@@ -178,14 +179,14 @@ int cmd_exec(data_shell *tash)
 	if (pd == 0)
 	{
 	if (exec == 0)
-	dir = _which(tash->args[0], tash->_environ);
+	dir = _which(datash->args[0], datash->_environ);
 	else
-	dir = tash->args[0];
-	execve(dir + exec, tash->args, tash->_environ);
+	dir = datash->args[0];
+	execve(dir + exec, datash->args, datash->_environ);
 	}
 	else if (pd < 0)
 	{
-	perror(tash->av[0]);
+	perror(datash->av[0]);
 	return (1);
 	}
 	else
@@ -194,6 +195,7 @@ int cmd_exec(data_shell *tash)
 	wpd = waitpid(pd, &state, WUNTRACED);
 	} while (!WIFEXITED(state) && !WIFSIGNALED(state));
 	}
-	tash->status = state / 256;
+
+	datash->status = state / 256;
 	return (1);
 }
